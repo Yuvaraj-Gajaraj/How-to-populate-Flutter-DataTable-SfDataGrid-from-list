@@ -1,164 +1,39 @@
-# How to populate Flutter DataTable SfDataGrid from list
+# Flutter DataGrid Populate from List
 
-The Flutter DataTable requires the collection of the DataGridRow to show the data. The following steps explains how to load the data from the list collection to the Flutter DataTable.
-## STEP 1
-Import the following library in the flutter application.
-```xml
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-```
 
-## STEP 2
+This repository contains a sample that demonstrates how to load the data from the list collection in Syncfusion® DataGrid package.
 
-The SfDataGrid is dependent upon the data. Create a simple data source for the SfDataGrid.
-Here, create an employee data source. 
 
-```xml
-class Employee {
-  Employee(this.id, this.name, this.designation, this.salary);
+## Syncfusion® controls:
 
-  final int id;
 
-  final String name;
+This project used the following Syncfusion® widget(s):
+* [DataGrid](https://www.syncfusion.com/flutter-widgets/flutter-datagrid)
 
-  final String designation;
 
-  final int salary;
-}
-```
+## Supported platforms
 
-Create the collection of employee data with the required number of data objects. Here, the method which is used to populate the data objects is initialized in initState(). The DataGridSource object is expected to be long-lived, not re-created with each build.
 
-```xml
-List<Employee> employees = <Employee>[];
+Refer to the following link to know about the supported platform - [Platforms](https://help.syncfusion.com/flutter/system-requirements#supported-platforms)
 
-late EmployeeDataSource employeeDataSource;
 
-@override
-void initState() {
-  super.initState();
-  employees= getEmployees();
-  employeeDataSource = EmployeeDataSource(employees: employees);
-}
+## Requirements to run the sample
 
- List<Employee> getEmployees() {
-  return[
-  Employee(10001, 'James', 'Project Lead', 20000),
-  Employee(10002, 'Kathryn', 'Manager', 30000),
-  Employee(10003, 'Lara', 'Developer', 15000),
-  Employee(10004, 'Michael', 'Designer', 15000),
-  Employee(10005, 'Martin', 'Developer', 15000),
-  Employee(10006, 'Newberry', 'Developer', 15000),
-  Employee(10007, 'Balnc', 'Developer', 15000),
-  Employee(10008, 'Perry', 'Developer', 15000),
-  Employee(10009, 'Gable', 'Developer', 15000),
-  Employee(10010, 'Grimes', 'Developer', 15000)
-  ];
-}
-```
 
-## STEP 3: 
+Refer to the following link to know about system requirements - [System Requirements](https://help.syncfusion.com/flutter/system-requirements)
 
-The DataGridSource is used to obtain the row data for the SfDataGrid. So, create 
-the data source class and override the rows and the buildRow APIs in it.
 
-```xml
-class EmployeeDataSource extends DataGridSource {
-  EmployeeDataSource({List<Employee> employees}) {
-     _employees = employees
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
-              DataGridCell<String>(columnName: 'name', value: e.name),
-              DataGridCell<String>(
-                  columnName: 'designation', value: e.designation),
-              DataGridCell<int>(columnName: 'salary', value: e.salary),
-            ]))
-        .toList();
-  }
+## How to run the sample
 
-  List<DataGridRow>  _employees = [];
 
-  @override
-  List<DataGridRow> get rows =>  _employees;
+1. Clone the sample and open it in preferred IDE.
+2. Run the application.
 
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((dataGridCell) {
-      return Container(
-        alignment: (dataGridCell.columnName == 'id' || dataGridCell.columnName == 'salary')
-            ? Alignment.centerRight
-            : Alignment.centerLeft,
-        padding: EdgeInsets.all(16.0),
-        child: Text(dataGridCell.value.toString()),
-      );
-    }).toList());
-  }
-}
-```
 
-## STEP 4
+*Note: If you download the sample using the "Download ZIP" option, right-click it, select Properties, and then select Unblock.*
 
- Create an instance of the DataGridSource and set this object to the source property of the SfDataGrid.
 
-```xml
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-      appBar: AppBar(
-        title: Text('Syncfusion DataGrid'),
-      ),
-      body: Center(
-        child: Expanded(
-          child: SfDataGrid(
-            source: _employeeDataSource,
-          ),
-        ),
-      ));
-```
+## License
 
-## STEP 5
 
- Finally, add the column collection to the columns property. 
- Here give an id, name, designation, and salary columns to the columns property.
-
-```xml
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Syncfusion Flutter DataGrid'),
-    ),
-    body: SfDataGrid(
-      source: employeeDataSource,
-      columns: <GridColumn>[
-        GridTextColumn(
-            columnName: 'id',
-            label: Container(
-                padding: EdgeInsets.all(16.0),
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'ID',
-                ))),
-        GridTextColumn(
-            columnName: 'name',
-            label: Container(
-                padding: EdgeInsets.all(16.0),
-                alignment: Alignment.centerLeft,
-                child: Text('Name'))),
-        GridTextColumn(
-            columnName: 'designation',
-            width: 120,
-            label: Container(
-                padding: EdgeInsets.all(16.0),
-                alignment: Alignment.centerLeft,
-                child: Text('Designation'))),
-        GridTextColumn(
-            columnName: 'salary',
-            label: Container(
-                padding: EdgeInsets.all(16.0),
-                alignment: Alignment.centerRight,
-                child: Text('Salary'))),
-      ],
-    ),
-  );
-```
+Syncfusion® has no liability for any damage or consequence that may arise by using or viewing the samples. The samples are for demonstrative purposes, and if you choose to use or access the samples, you agree to not hold Syncfusion® liable, in any form, for any damage that is related to use, for accessing, or viewing the samples. By accessing, viewing, or seeing the samples, you acknowledge and agree Syncfusion®’s samples will not allow you seek injunctive relief in any form for any claim related to the sample. If you do not agree to this, do not view, access, utilize, or otherwise do anything with Syncfusion®’s samples.
